@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import List from './components/List'
 import Movie from './components/Movie';
+import AddMovie from './components/AddMovie'
 
 import _ from 'lodash'
-
-// const movies = [
-//   { id: "AMLsriUkE", title: "2020", director: "Steven Spielberg" },
-//   { id: "6dKZxwwmN", title: "Sharknado", director: "Anthony C. Ferrante" },
-//   { id: "z2uykusRE", title: "Titanic", director: "James Cameron" }
-// ];
 
 // class component
 class App extends Component {
@@ -64,8 +57,13 @@ class App extends Component {
     })
   }
 
-  // m.hasOscar === true   // => true 
-  // m.hasOscar // => true
+  addMovieHandler = (newMovie) => {
+
+    this.setState({
+      movies: this.state.movies.concat(newMovie)
+    })
+
+  }
 
   render() {
 
@@ -77,11 +75,18 @@ class App extends Component {
 
     return (
       <div className="App" >
-        <List></List>
-        {movies.map((m) => <Movie key={m.id} movieId={m.id} title={m.title} director={m.director} deleteHandler={this.deleteHandler} />)}
-        <button onClick={this.sortHandler}>SORT THE LIST (by title)</button>
+        {movies.map((m) => <Movie
+          key={m.id}
+          movieId={m.id}
+          title={m.title}
+          director={m.director}
+          deleteHandler={this.deleteHandler}
+        />)}
+        <button onClick={() => this.sortHandler()}>SORT THE LIST (by title)</button>
         <button onClick={() => this.filterHandler(true)}>FILTER THE LIST (only movies with oscars)</button>
         <button onClick={() => this.filterHandler(false)}>UNFILTER THE LIST</button>
+
+        <AddMovie addMovieHandler={this.addMovieHandler}></AddMovie>
       </div >
     )
   };
